@@ -10,7 +10,7 @@
 </head>
 <body>
 
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark flex-md-row align-items-center pb-3 mb-4">
         <div class="container">
           <a class="navbar-brand" href="index.html">Weather APP</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,21 +36,40 @@
         </div>
       </nav>
 
-
     <div class="container">
         <div class="row">
             <div class="col-5 offset-1">
-                <form action="">
-                    <label for="city">City</label>
-                    <input type="text" id="city" class="form-control" name="city" placeholder="Enter city">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <h1>Weather in your city</h1>
+                    {{ form.name }}
+                    <br>
                     <input type="submit" name="send" value="Get" class="mt-w btn btn-danger">
                 </form>
             </div>
             <div class="col-4 offset-1">
                 <h1>Information</h1>
-                <div class="alert alert-danger">
-                    Weather in Minsk
+
+                {% for info in all_info %}
+                <div class="alert alert-info">
+
+<!--                    <div class="row"> Delete form-->
+<!--                        <div class="col-md-1 offset-10">-->
+<!--                            <button class="mobile-button" onclose="" >X</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+                    <div class="row">
+                        <div class="col-9">
+                            <b>City:</b> {{ info.city }}<br>
+                            <b>Temperature:</b> {{ info.temp }} <sup>o</sup> <br>
+                        </div>
+                        <div class="col-2 offset-1">
+                            <img src="http://openweathermap.org/img/w/{{ info.icon }}.png" alt="Photo">
+                        </div>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
     </div>
