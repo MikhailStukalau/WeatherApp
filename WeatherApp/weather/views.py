@@ -2,6 +2,7 @@ from django.shortcuts import render
 import requests
 from .models import City
 from .forms import CityForm
+from django.views.generic import DeleteView, DetailView
 
 
 def index(request):
@@ -22,8 +23,15 @@ def index(request):
         res = requests.get(url.format(city.name)).json()
         city_info = {
             'city': city.name,
+            'country': res["sys"]["country"],
             'temp': res["main"]["temp"],
-            'icon': res["weather"][0]["icon"]
+            'icon': res["weather"][0]["icon"],
+            'pressure': res["main"]["pressure"],
+            'humidity': res["main"]["humidity"],
+            'temp_min': res["main"]["temp_min"],
+            'temp_max': res["main"]["temp_max"],
+            'visibility': res["visibility"],
+            'wind_speed': res["wind"]["speed"],
         }
 
         if city_info not in all_cities:
@@ -31,9 +39,20 @@ def index(request):
         else:
             form = CityForm()
 
+
     context = {
         'all_info': all_cities,
         'form': form,
     }
     return render(request, 'index.html', context)
 
+
+class DeleteCity(DeleteView):
+    model = City
+    success_url = 'index.html'
+    template_name = 'index.html'
+
+class DetailCity(DetailView):
+    model = City
+    template_name = 'detail_city.html'
+    context_object_name = 'all_info'

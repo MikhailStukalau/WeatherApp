@@ -1,5 +1,5 @@
 from .models import City
-from django.forms import ModelForm, TextInput
+from django.forms import ModelForm, TextInput, widgets
 
 class CityForm(ModelForm):
     class Meta:
