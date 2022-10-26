@@ -1,17 +1,21 @@
 {% extends 'base.html' %}
 
-{% block title %} Detail city {% endblock %}
 
 
 {% block content %}
-{{ City.name }}
+<!--{{ city.name }}-->
 
-  <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-    <div class="col p-4 d-flex flex-column position-static">
-        <h3 align="center">{{ all_info.name }}</h3>
-        <p> Country: {{ all_info.country }}</p>
+
+    <div class="container">
+        <h3 align="center">{{ el.name }}</h3>
+        <h3 align="center">{{ el.id }}</h3>
+        {% for i in info %}
+        <p> Country: {{ i.country }}</p>
+        <p> Temperature: {{ i.temp }}</p>
+        <p> Pressure: {{ i.pressure }}</p>
+        {% endfor %}
 
     </div>
-  </div>
+
 
 {% endblock %}

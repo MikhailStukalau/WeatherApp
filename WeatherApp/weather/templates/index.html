@@ -14,7 +14,6 @@
         </div>
         <div class="col-4 offset-1">
             <h1>Information</h1>
-
             {% for info in all_info %}
             <div class="alert alert-info">
                 <div class="row">
@@ -26,7 +25,8 @@
                         <img src="http://openweathermap.org/img/w/{{ info.icon }}.png" alt="Photo">
                     </div>
                 </div>
-                <form action="{% url 'detail' info.pk %}" method="post">
+
+                <form action="{% url 'detail' info.id %}" method="get">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-info">Detail</button>
                 </form>

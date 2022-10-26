@@ -2,18 +2,18 @@ from django.shortcuts import render
 import requests
 from .models import City
 from .forms import CityForm
-from django.views.generic import DeleteView, DetailView
+from django.views.generic import DeleteView, DetailView, ListView
+
+appid = '937718b1123af2e9f2f0c69f567d1f06'
+url = "https://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=" + appid
 
 
 def index(request):
-    appid = '937718b1123af2e9f2f0c69f567d1f06'
-    url = "https://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=" + appid
-
-
     if request.method == 'POST':
         form = CityForm(request.POST)
-        if form.is_valid():
-            form.save()
+    if form.is_valid():
+        form.save()
+
 
     form = CityForm()
 
@@ -22,6 +22,7 @@ def index(request):
     for city in cities:
         res = requests.get(url.format(city.name)).json()
         city_info = {
+            'id': city.id,
             'city': city.name,
             'country': res["sys"]["country"],
             'temp': res["main"]["temp"],
@@ -39,7 +40,6 @@ def index(request):
         else:
             form = CityForm()
 
-
     context = {
         'all_info': all_cities,
         'form': form,
@@ -52,7 +52,11 @@ class DeleteCity(DeleteView):
     success_url = 'index.html'
     template_name = 'index.html'
 
+
 class DetailCity(DetailView):
     model = City
     template_name = 'detail_city.html'
-    context_object_name = 'all_info'
+    context_object_name = 'el'
+    # city = City.objects.get(City.id)
+    # res = requests.get(url.format(city.name)).json()
+    # print(city)
