@@ -7,13 +7,13 @@
 
 
     <div class="container">
-        <h3 align="center">{{ el.name }}</h3>
-        <h3 align="center">{{ el.id }}</h3>
-        {% for i in info %}
-        <p> Country: {{ i.country }}</p>
-        <p> Temperature: {{ i.temp }}</p>
-        <p> Pressure: {{ i.pressure }}</p>
-        {% endfor %}
+        <h3 align="center">{{ info.city }}</h3>
+
+        <p> Country: {{ info.country }}</p>
+        <p> Temperature: {{ info.temp }}</p>
+        <p> Pressure: {{ info.pressure }}</p>
+        <p> image: <img src="{{ info.icon }}"/></p>
+
 
     </div>
 

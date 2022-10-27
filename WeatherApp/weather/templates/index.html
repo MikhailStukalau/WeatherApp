@@ -4,11 +4,13 @@
 <div class="container">
     <div class="row">
         <div class="col-5 offset-1">
-            <form action="" method="post">
+            <form method="post">
                 {% csrf_token %}
                 <h1>Weather in your city</h1>
                 {{ form.name }}
-                <br>
+                <small>
+                <p style="color: red;">{{ error }}</p>
+                </small>
                 <input type="submit" name="send" value="Get" class="mt-w btn btn-danger">
             </form>
         </div>
@@ -22,7 +24,7 @@
                         <b>Temperature:</b> {{ info.temp }} <sup>o</sup> <br>
                     </div>
                     <div class="col-2 offset-1">
-                        <img src="http://openweathermap.org/img/w/{{ info.icon }}.png" alt="Photo">
+                        <img src="{{ info.icon }}" alt="Photo">
                     </div>
                 </div>
 
